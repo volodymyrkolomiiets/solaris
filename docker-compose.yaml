@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  db_user:
+    image: mysql:8.0
+    env_file:
+      - ${PWD}/user_service/.env
+    restart: always
+    ports:
+      - "33061:2206"
+    volumes:
+      - ${PWD}/user_service/db_user:/var/lib/mysql

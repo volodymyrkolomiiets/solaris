@@ -7,7 +7,7 @@ migrate = Migrate(app, db)
 
 from flask import g
 from flask.sessions import SecureCookieSessionInterface
-from flask_login import user_loaded_from_request
+from flask_login import user_loaded_from_header
 
 
 class CustomSessionInterface(SecureCookieSessionInterface):
@@ -23,7 +23,7 @@ class CustomSessionInterface(SecureCookieSessionInterface):
 app.session_interface = CustomSessionInterface()
 
 
-@user_loaded_from_request.connect
+@user_loaded_from_header.connect
 def user_loaded_from_request(app, user=None):
     g.login_via_request = True
 

@@ -12,10 +12,15 @@ class Config:
 
 
 class DevelopmentConfig(Config):
+    MYSQL_USER = os.getenv("MYSQL_USER")
+    MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
+    MYSQL_PORT = os.getenv("MYSQL_PORT")
+    MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
+
     ENV = "development"
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://main_user:main_pass@0.0.0.0:3306/user_db"
-    SQLALCHEMY_ECHO=True
+    SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{MYSQL_USER}:{MYSQL_PASSWORD}@0.0.0.0:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    SQLALCHEMY_ECHO = True
 
 
 class ProductionConfig(Config):

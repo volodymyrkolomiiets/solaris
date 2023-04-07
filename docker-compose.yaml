@@ -6,6 +6,6 @@ services:
       - ${PWD}/user_service/.env
     restart: always
     ports:
-      - "33061:2206"
+      - "33061:3306"
     volumes:
       - ${PWD}/user_service/db_user:/var/lib/mysql

@@ -9,7 +9,7 @@ from passlib.hash import sha256_crypt
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.filterd_by(id=user_id).first()
+    return User.query.filter_by(id=user_id).first()
 
 
 @login_manager.request_loader
@@ -74,3 +74,21 @@ def post_logout():
         logout_user()
         return make_response(jsonify({"message": "You are logged out"}))
     return make_response({"message": "You are not logged in"})
+
+
+@user_api_blueprint.route("/api/user/<username>/exists", methods=["GET"])
+def get_username(username):
+    item = User.query.filter_by(username=username).first()
+    if item is not None:
+        response = jsonify({"result": True})
+    else:
+        response = jsonify({"message": "Cannot find username"}), 404
+    return response
+
+
+@login_required
+@user_api_blueprint.route("/api/user", methods=["GET"])
+def get_user():
+    if current_user.is_authenticated:
+        return make_response(jsonify({"result": current_user.to_json()}))
+    return make_response(jsonify({"message": "Not logged In"}))
